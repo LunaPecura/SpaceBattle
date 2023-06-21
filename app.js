@@ -21,7 +21,7 @@ class Spaceship {
     if (successKey <= this.accuracy) {
       console.log("HIT");
       otherShip.hull -= this.firepower;
-    } 
+    } else {console.log("MISS")}
   }
 
   isAlive() {
@@ -49,30 +49,40 @@ class Game {
 
     this.assembly = new Spaceship(20, 5, .7);
     this.currentEnemy = this.alienFleet.pop();
-    console.log("NEW ENEMY");
+    console.log("********** NEW GAME **********");
+    console.log("FIRST ENEMY");
   }
 
 
   playRound() {
     this.roundCount++;
+    console.log("Round " + this.roundCount + ": ")
     this.assembly.attack(this.currentEnemy);
     this.currentEnemy.attack(this.assembly);
-    console.log("Round " + this.roundCount + ": ")
-    console.log("Assembly: ", this.assembly);
-    console.log("Enemy: ", this.currentEnemy);
+    console.log("Assembly: ", this.assembly.hull);
+    console.log("Enemy: ", this.currentEnemy.hull);
   }
 
   fightEnemy() {
     while (this.assembly.isAlive() && this.currentEnemy.isAlive()) {
       this.playRound();
     }
+
+    if (this.currentEnemy.isAlive()) {  // END OF GAME (LOSS)
+      console.log("YOU LOSE");
+      return;
+    }
   }
 
   playGame() {
     while(this.alienFleet.length > 0) {
       this.currentEnemy = this.alienFleet.pop();
-      console.log(this.currentEnemy);
+      console.log("NEW ENEMY: ", this.currentEnemy);
       this.fightEnemy();
+    }
+
+    if(this.assembly.isAlive()) {     // END OF GAME (WIN)
+      console.log("YOU WIN");  
     }
   }
 }
