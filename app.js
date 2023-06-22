@@ -1,3 +1,8 @@
+// "https://png.pngtree.com/png-vector/20210329/ourmid/pngtree-cute-green-cartoon-spaceship-png-image_3136437.jpg"
+// https://static.vecteezy.com/system/resources/previews/009/463/283/original/cute-alien-dabbing-on-moon-cartoon-icon-illustration-animal-food-flat-cartoon-concept-vector.jpg
+// https://static.displate.com/280x392/displate/2022-06-30/ed7b5d1d595bdd1133cc6fd619f31f82_755c8abc064774a95c9bec3635c4884a.jpg
+// https://ih1.redbubble.net/image.55849089.2532/pp,840x830-pad,1000x1000,f8f8f8.u2.jpg
+// https://easydrawingguides.com/wp-content/uploads/2020/09/how-to-draw-a-spaceship-featured-image-1200.png
 
 function randomInt(min, max) { // taken from MDN website; both min and max are inclusive
   min = Math.ceil(min);
@@ -87,8 +92,12 @@ class Game {
   }
 }
 
-const myGame = new Game();
-myGame.playGame();
+const play = () => {
+  const myGame = new Game();
+  myGame.playGame();
+}
+
+
 
 
 /* SPECS
