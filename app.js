@@ -8,6 +8,9 @@ function randomInt(min, max) { // taken from MDN website; both min and max are i
 /* SPACESHIP CLASS *********************************************************/
 
 class Spaceship {
+  hull;
+  firepower;
+  accuracy;
 
   constructor(hull, firepower, accuracy) {
     this.hull = hull;
@@ -39,6 +42,7 @@ class Game {
   
   constructor() {
 
+    // SET UP ALIEN ARRAY
     this.alienFleet = Array.from(Array(this.fleetStrength), () => {
       let h = randomInt(3, 6);
       let fp = randomInt(2, 4);
@@ -46,21 +50,16 @@ class Game {
       return new Spaceship(h, fp, ac);
     });
 
+    // SET UP SPACESHIP
     this.assembly = new Spaceship(20, 5, .7);
-    textOutput.innerHTML = "********** NEW GAME **********";
   }
+
 
   attack() {
     let currentAction = this.assembly.attack(this.currentEnemy);
     displayActionRight.innerHTML = currentAction;
-    if(currentAction === "HIT") {
-      displayActionRight.setAttribute("color", "red");
-    } else {
-      displayActionRight.setAttribute("color", "green");
-    }
-    
     return currentAction;
-  };
+  }
 
   counterAttack() {
     let currentAction = this.currentEnemy.attack(this.assembly);
@@ -69,6 +68,8 @@ class Game {
   }
 }
 
+
+
 /* GAME PLAY ********************************************************************/
 
 let myGame;
@@ -76,14 +77,23 @@ const displayHealthLeft = document.querySelector("#healthDisplaySelf");
 const displayHealthRight = document.querySelector("#healthDisplayEnemy");
 const displayActionLeft = document.querySelector("#actionDisplaySelf");
 const displayActionRight = document.querySelector("#actionDisplayEnemy");
-const textOutput = document.querySelector(".textOutput")
-
-
+const textOutput = document.querySelector(".textOutput");
+const gameButton = document.querySelector(".gameButton");
+const enemyButton = document.querySelector(".enemyButton");
+const attackButton = document.querySelector(".attackButton");
 
 const newGame = () => {
   myGame = new Game();
+  textOutput.innerHTML = "********** NEW GAME **********";
   displayHealthLeft.innerHTML = myGame.assembly.hull;
-  newEnemy();
+  displayActionLeft.innerHTML = "";
+  displayHealthRight.innerHTML = "";
+  displayActionRight.innerHTML = "";
+  //gameButton.style.backgroundColor = 'lightgray';
+  gameButton.setAttribute("class", "inactive");
+  enemyButton.setAttribute("class", "active");
+  attackButton.setAttribute("class", "inactive");
+  //newEnemy();
 }
 
 const newEnemy = () => {
@@ -91,32 +101,43 @@ const newEnemy = () => {
   textOutput.innerHTML = "NEW ENEMY: hull " + myGame.currentEnemy.hull + " / firepower " +
           myGame.currentEnemy.firepower + " / accuracy " + myGame.currentEnemy.accuracy;
   displayHealthRight.innerHTML = myGame.currentEnemy.hull;
+  displayActionRight.innerHTML = "";
+  enemyButton.setAttribute("class", "inactive");
+  attackButton.setAttribute("class", "active");
 }
 
+/* ATTACK *******************************************************************************************/
 const attack = () => {
   myGame.roundCount++;
   textOutput.innerHTML += "<br>ROUND " + myGame.roundCount;
-      
-  // ATTACK
   let currentAction = myGame.attack();
   displayHealthRight.innerHTML = myGame.currentEnemy.hull;
   textOutput.innerHTML += "<br>ATTACK!";
+  attackButton.setAttribute("class", "inactive");
+
   if(currentAction === "HIT") {
-    textOutput.innerHTML += " ... SUCCESS";
+    textOutput.innerHTML += " ...SUCCESS";
+
     if(!myGame.currentEnemy.isAlive()) {
+
+      // END OF GAME (WIN)
       if(myGame.alienFleet.length === 0) {
         textOutput.innerHTML += "<br><br>********** Y O U   W O N **********";
+        gameButton.setAttribute("class", "active");
         return;
+      } else {
+        enemyButton.setAttribute("class", "active");
+        displayActionLeft.innerHTML = "";
       }
-    }
-  } else { textOutput.innerHTML += " ... failure"; }
+    } 
+  } else { textOutput.innerHTML += " ...failure"; }
  
   if(myGame.currentEnemy.isAlive()) {
     counterAttack();
   }
 }
 
-// COUNTER ATTACK
+/* COUNTER ATTACK ***********************************************************************************/
 const counterAttack = () => {
   let counterAction = myGame.counterAttack(); 
   textOutput.innerHTML += "<br>INCOMING ATTACK!";
@@ -129,7 +150,10 @@ const counterAttack = () => {
   // END OF GAME (LOSS)
   if(!myGame.assembly.isAlive()) {
     textOutput.innerHTML += "<br><br>++++++++++ Y O U   D I E D ++++++++++";
+    gameButton.setAttribute("class", "active");
     return;
+  } else {
+    attackButton.setAttribute("class", "active");
   }
 }
 

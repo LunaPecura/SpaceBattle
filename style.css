@@ -93,7 +93,19 @@ button {
   font-weight: 900;
 }
 
-.gameButton {
+button.active {
+  background-color: greenyellow;
+  color: black;
+  font-weight: 900;
+}
+
+button.inactive {
+  background-color: lightgray;
+  color: gray;
+  font-weight: 700;
+}
+
+.gameButtonActive {
   background-color: greenyellow;
 }
 
