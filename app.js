@@ -81,49 +81,54 @@ const textOutput = document.querySelector(".textOutput")
 const newGame = () => {
   myGame = new Game();
   displayHealthLeft.innerHTML = myGame.assembly.hull;
+  newEnemy();
 }
 
 const newEnemy = () => {
-  if(myGame.alienFleet.length > 0) {
+  //if(myGame.alienFleet.length > 0) {
     myGame.currentEnemy = myGame.alienFleet.pop();
     textOutput.innerHTML = "NEW ENEMY: hull " + myGame.currentEnemy.hull + " / firepower " +
       myGame.currentEnemy.firepower + " / accuracy " + myGame.currentEnemy.accuracy;
     displayHealthRight.innerHTML = myGame.currentEnemy.hull;
-  }
+  //}
 }
 
 const fightEnemy = () => {
   if (myGame.assembly.isAlive() && myGame.currentEnemy.isAlive()) {
-      myGame.roundCount++;
-      textOutput.innerHTML += "<br>ROUND " + myGame.roundCount;
+    myGame.roundCount++;
+    textOutput.innerHTML += "<br>ROUND " + myGame.roundCount;
       
-      let currentAction = myGame.attack();
-      displayHealthRight.innerHTML = myGame.currentEnemy.hull;
-      textOutput.innerHTML += "<br>ATTACK!";
-      if(currentAction === "HIT") {
-        textOutput.innerHTML += "... SUCCESS";
-      } else {
-        textOutput.innerHTML += "... failure";
+    // ATTACK
+    let currentAction = myGame.attack();
+    displayHealthRight.innerHTML = myGame.currentEnemy.hull;
+    textOutput.innerHTML += "<br>ATTACK!";
+    if(currentAction === "HIT") {
+      textOutput.innerHTML += "... SUCCESS";
+      if(!myGame.currentEnemy.isAlive()) {
+        if(myGame.alienFleet.length === 0) {
+          textOutput.innerHTML += "<br><br>++++++++++ Y O U   W O N ++++++++++";
+          return;
+        } //else { newEnemy(); }
       }
+    } else { textOutput.innerHTML += "... failure"; }
 
-      if(myGame.currentEnemy.isAlive()) {
-        let counterAction = myGame.counterAttack(); 
-        textOutput.innerHTML += "<br>INCOMING ATTACK!";
-        if(counterAction === "HIT") {
-          textOutput.innerHTML += "... defense failed";
-        } else {
-          textOutput.innerHTML += "... DEFENSE SUCCESSFUL!";
-        }
-        displayHealthLeft.innerHTML = myGame.assembly.hull;
-      }
+    // COUNTER ATTACK
+    if(myGame.currentEnemy.isAlive()) {
+      let counterAction = myGame.counterAttack(); 
+      textOutput.innerHTML += "<br>INCOMING ATTACK!";
+      if(counterAction === "HIT") {
+        textOutput.innerHTML += "... defense failed";
+      } else { textOutput.innerHTML += "... DEFENSE SUCCESSFUL!"; }
+      displayHealthLeft.innerHTML = myGame.assembly.hull;
+    }
+
+    // END OF GAME (LOSS)
+    if(!myGame.assembly.isAlive()) {
+      textOutput.innerHTML += "<br><br>++++++++++ Y O U   D I E D ++++++++++";
+      return;
+    }
   }
 }
-      /* if (myGame.currentEnemy.isAlive()) {  // END OF GAME (LOSS)
-        console.log("YOU LOSE");
-        return;
-      }
- */
-
 
 /* 
 
