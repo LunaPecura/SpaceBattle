@@ -1,3 +1,5 @@
+/* IMAGES *****************************************************/
+
 img.alien {
   width: 75px;
   height: 75px;
@@ -16,25 +18,19 @@ img.spaceship {
   content: url("https://png.pngtree.com/png-vector/20190130/ourmid/pngtree-astronauts-with-spaceships-exploring-space-can-use-commercial-elements-spacespaceshipastronautspacecraftweightless-statehand-png-image_587735.jpg");
 }
 
+
+
+/* SHARED STUFF *****************************************************************/
+
 .mainContainer {
   display: flex;
   border: solid black;
 } 
 
-.spaceStation {
-  border: solid red;
-  background-color: black;
-}
-
 .displayArea {
   display: flex;
   justify-content: space-evenly;
   border: solid purple;
-}
-
-.leftField {
-  width: 40%;
-  border: solid blue;
 }
 
 .healthDisplay {
@@ -59,6 +55,20 @@ img.spaceship {
   font-weight: 900;
 }
 
+
+
+/* LEFT SIDE *********************************************************************/
+
+.leftField {
+  width: 40%;
+  border: solid blue;
+}
+
+.spaceStation {
+  border: solid red;
+  background-color: black;
+}
+
 .textOutput {
   border: solid orange;
   height: 170px;
@@ -68,6 +78,8 @@ img.spaceship {
   padding: 5px;
   font-family: "Courier New";
 }
+
+/* dispplay area left side (commons) */
 
 .buttonArea {
   border: solid pink;
@@ -80,6 +92,24 @@ button {
   height: 30px;
   font-weight: 900;
 }
+
+.gameButton {
+  background-color: greenyellow;
+}
+
+.enemyButton {
+  background-color: lightgray;
+  color: gray;
+}
+
+.attackButton {
+  background-color: lightgray;
+  color: gray;
+}
+
+
+
+/* RIGHT SIDE *********************************************************************/
 
 .rightField {
   border: solid green;
@@ -100,12 +130,19 @@ button {
   padding-left: 20px;
 }
 
+/* display area right (commons) */
+
 .alienField {
   border: solid yellow;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   background-color: black;
+}
+
+div.alien {
+  border: solid greenyellow;
+  margin: 5px;
 }
 
 .statsField {
@@ -122,7 +159,3 @@ button {
   height: 75px;
 }
 
-div.alien {
-  border: solid greenyellow;
-  margin: 5px;
-}
