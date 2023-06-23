@@ -1,8 +1,3 @@
-// "https://png.pngtree.com/png-vector/20210329/ourmid/pngtree-cute-green-cartoon-spaceship-png-image_3136437.jpg"
-// https://static.vecteezy.com/system/resources/previews/009/463/283/original/cute-alien-dabbing-on-moon-cartoon-icon-illustration-animal-food-flat-cartoon-concept-vector.jpg
-// https://static.displate.com/280x392/displate/2022-06-30/ed7b5d1d595bdd1133cc6fd619f31f82_755c8abc064774a95c9bec3635c4884a.jpg
-// https://ih1.redbubble.net/image.55849089.2532/pp,840x830-pad,1000x1000,f8f8f8.u2.jpg
-// https://easydrawingguides.com/wp-content/uploads/2020/09/how-to-draw-a-spaceship-featured-image-1200.png
 
 function randomInt(min, max) { // taken from MDN website; both min and max are inclusive
   min = Math.ceil(min);
@@ -22,11 +17,10 @@ class Spaceship {
 
   attack(otherShip) {
     let successKey = Math.random();
-    //console.log(successKey);
     if (successKey <= this.accuracy) {
-      console.log("HIT");
       otherShip.hull -= this.firepower;
-    } else {console.log("MISS")}
+      return "HIT";
+    } else { return "MISS"; }
   }
 
   isAlive() {
@@ -42,7 +36,7 @@ class Game {
   fleetStrength = 6;
   roundCount = 0;
   currentEnemy;
-
+  
   constructor() {
 
     this.alienFleet = Array.from(Array(this.fleetStrength), () => {
@@ -53,49 +47,93 @@ class Game {
     });
 
     this.assembly = new Spaceship(20, 5, .7);
-    this.currentEnemy = this.alienFleet.pop();
-    console.log("********** NEW GAME **********");
-    console.log("FIRST ENEMY");
+    textOutput.innerHTML = "********** NEW GAME **********";
   }
 
+  attack() {
+    let currentAction = this.assembly.attack(this.currentEnemy);
+    displayActionRight.innerHTML = currentAction;
+    if(currentAction === "HIT") {
+      displayActionRight.setAttribute("color", "red");
+    } else {
+      displayActionRight.setAttribute("color", "green");
+    }
+    
+    return currentAction;
+  };
 
-  playRound() {
-    this.roundCount++;
-    console.log("Round " + this.roundCount + ": ")
-    this.assembly.attack(this.currentEnemy);
-    this.currentEnemy.attack(this.assembly);
-    console.log("Assembly: ", this.assembly.hull);
-    console.log("Enemy: ", this.currentEnemy.hull);
+  counterAttack() {
+    let currentAction = this.currentEnemy.attack(this.assembly);
+    displayActionLeft.innerHTML = currentAction;
+    return currentAction;
   }
+}
 
-  fightEnemy() {
-    while (this.assembly.isAlive() && this.currentEnemy.isAlive()) {
-      this.playRound();
-    }
+let myGame;
+const displayHealthLeft = document.querySelector("#healthDisplaySelf");
+const displayHealthRight = document.querySelector("#healthDisplayEnemy");
+const displayActionLeft = document.querySelector("#actionDisplaySelf");
+const displayActionRight = document.querySelector("#actionDisplayEnemy");
+const textOutput = document.querySelector(".textOutput")
 
-    if (this.currentEnemy.isAlive()) {  // END OF GAME (LOSS)
-      console.log("YOU LOSE");
-      return;
-    }
+
+
+const newGame = () => {
+  myGame = new Game();
+  displayHealthLeft.innerHTML = myGame.assembly.hull;
+}
+
+const newEnemy = () => {
+  if(myGame.alienFleet.length > 0) {
+    myGame.currentEnemy = myGame.alienFleet.pop();
+    textOutput.innerHTML = "NEW ENEMY: hull " + myGame.currentEnemy.hull + " / firepower " +
+      myGame.currentEnemy.firepower + " / accuracy " + myGame.currentEnemy.accuracy;
+    displayHealthRight.innerHTML = myGame.currentEnemy.hull;
   }
+}
 
-  playGame() {
-    while(this.alienFleet.length > 0) {
-      this.currentEnemy = this.alienFleet.pop();
-      console.log("NEW ENEMY: ", this.currentEnemy);
-      this.fightEnemy();
-    }
+const fightEnemy = () => {
+  if (myGame.assembly.isAlive() && myGame.currentEnemy.isAlive()) {
+      myGame.roundCount++;
+      textOutput.innerHTML += "<br>ROUND " + myGame.roundCount;
+      
+      let currentAction = myGame.attack();
+      displayHealthRight.innerHTML = myGame.currentEnemy.hull;
+      textOutput.innerHTML += "<br>ATTACK!";
+      if(currentAction === "HIT") {
+        textOutput.innerHTML += "... SUCCESS";
+      } else {
+        textOutput.innerHTML += "... failure";
+      }
 
-    if(this.assembly.isAlive()) {     // END OF GAME (WIN)
+      if(myGame.currentEnemy.isAlive()) {
+        let counterAction = myGame.counterAttack(); 
+        textOutput.innerHTML += "<br>INCOMING ATTACK!";
+        if(counterAction === "HIT") {
+          textOutput.innerHTML += "... defense failed";
+        } else {
+          textOutput.innerHTML += "... DEFENSE SUCCESSFUL!";
+        }
+        displayHealthLeft.innerHTML = myGame.assembly.hull;
+      }
+  }
+}
+      /* if (myGame.currentEnemy.isAlive()) {  // END OF GAME (LOSS)
+        console.log("YOU LOSE");
+        return;
+      }
+ */
+
+
+/* 
+
+    if(myGame.assembly.isAlive()) {     // END OF GAME (WIN)
       console.log("YOU WIN");  
     }
-  }
-}
+  
+ */
+  //myGame.playGame();
 
-const play = () => {
-  const myGame = new Game();
-  myGame.playGame();
-}
 
 
 

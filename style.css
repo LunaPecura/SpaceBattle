@@ -1,14 +1,19 @@
 img.alien {
   width: 75px;
   height: 75px;
-  margin: 10px;
+  content: url("https://png.pngtree.com/png-vector/20210301/ourmid/pngtree-cute-alien-flying-with-spaceship-ufo-mascot-logo-png-image_2993557.jpg");
+}
+
+img.currentAlien {
+  width: 200px;
+  height: 200px;
+  content: url("https://png.pngtree.com/png-vector/20210301/ourmid/pngtree-cute-alien-flying-with-spaceship-ufo-mascot-logo-png-image_2993557.jpg");
 }
 
 img.spaceship {
   width: 200px;
   height: 200px;
-  margin-top: 100px;
-  margin-left: 10px;
+  content: url("https://png.pngtree.com/png-vector/20190130/ourmid/pngtree-astronauts-with-spaceships-exploring-space-can-use-commercial-elements-spacespaceshipastronautspacecraftweightless-statehand-png-image_587735.jpg");
 }
 
 .mainContainer {
@@ -16,18 +21,24 @@ img.spaceship {
   border: solid black;
 } 
 
-.display {
+.spaceStation {
+  border: solid red;
+  background-color: black;
+}
+
+.displayArea {
   display: flex;
+  justify-content: space-evenly;
   border: solid purple;
 }
 
 .leftField {
-  width: 50%;
+  width: 40%;
   border: solid blue;
 }
 
 .healthDisplay {
-  border: solid red;
+  border: solid black;
   width: 100px;
   height: 100px;
   margin: 10px;
@@ -38,7 +49,7 @@ img.spaceship {
 }
 
 .actionDisplay {
-  border: solid red;
+  border: solid black;
   width: 100px;
   height: 100px;
   margin: 10px;
@@ -48,15 +59,70 @@ img.spaceship {
   font-weight: 900;
 }
 
+.textOutput {
+  border: solid orange;
+  height: 170px;
+  font-size: 12px;
+  background-color: black;
+  color: white;
+  padding: 5px;
+  font-family: "Courier New";
+}
+
+.buttonArea {
+  border: solid pink;
+  display: flex;
+  padding: 5px;
+  justify-content: space-evenly;
+}
+
+button {
+  height: 30px;
+  font-weight: 900;
+}
+
 .rightField {
   border: solid green;
-  width: 50%;
+  width: 60%;
   display: flex;
+}
+
+.battleArea {
+  border: solid purple;
+  width: 70%;
+}
+
+.currentEnemy {
+  border: solid mediumspringgreen;
+  background-color: black;
+  height: 339px;
+  padding-top: 50px;
+  padding-left: 20px;
 }
 
 .alienField {
   border: solid yellow;
   display: flex;
   flex-direction: column;
-  margin-left: 100px;
+  justify-content: space-evenly;
+  background-color: black;
+}
+
+.statsField {
+  border: solid turquoise;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.stats {
+  border: solid darkblue;
+  margin: 5px;
+  width: 75px;
+  height: 75px;
+}
+
+div.alien {
+  border: solid greenyellow;
+  margin: 5px;
 }
