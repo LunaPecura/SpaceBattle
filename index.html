@@ -16,43 +16,59 @@
     <!-- MAIN -->
     <div class="mainContainer">
 
-      <!-- LEFT -->
-      <div class="leftField">
+      <!-- LEFT THIRD -->
+      <div class="leftThird">
 
         <!-- Spaceship pic -->
-        <div class="spaceStation">
-          <img class="spaceship">
+        <div class="spaceStationArea">
+          <div class="spaceStation"><img class="spaceship"></div>
+          <div class="lossDeclaration"><img class="bigAlien"></div>
         </div>
 
         <div class="textOutput"></div>
 
-        <div class="displayArea">
-          <div class="healthDisplay" id="healthDisplaySelf"></div>
-          <div class="actionDisplay" id="actionDisplaySelf"></div>
+        <div class="displayArea left">
+          <div class="displayWindow health left"></div>
+          <div class="displayWindow action left"></div>
         </div>
 
-        <div class="buttonArea">
+        <div class="buttonArea left">
           <button class="gameButton active" onclick="newGame()">New Game</button>
-          <button class="enemyButton inactive" onclick="newEnemy()">New Enemy</button>
-          <button class="attackButton inactive" onclick="attack()">Attack!</button>
+          <!-- <button class="enemyButton inactive" disabled onclick="newEnemy()">New Enemy</button>
+          <button class="attackButton inactive" disabled onclick="attack()">Attack!</button> -->
         </div>
         
-      </div> <!-- END OF LEFT -->
+      </div> <!-- END OF LEFT THIRD -->
 
 
 <!------------------------------------------------------------------------------------------------------>
 
 
-      <!-- RIGHT -->
-      <div class="rightField">
+      <!-- MIDDLE THIRD -->
+      <div class="middleThird">
 
         <div class="battleArea">
-          <div class="currentEnemy"><img class="currentAlien"></div>
-          <div class="displayArea">
-            <div class="healthDisplay" id="healthDisplayEnemy"></div>
-            <div class="actionDisplay" id="actionDisplayEnemy"></div>
-          </div>
+          <div class="currentlyFighting"><img class="bigAlien"></div>
+          <div class="winDeclaration"><img class="spaceship"></div>
         </div>
+
+        <div class="displayArea right">
+          <div class="displayWindow health right"></div>
+          <div class="displayWindow action right"></div>
+        </div>
+
+        <div class="buttonArea right">
+          <!-- <button class="gameButton active" onclick="newGame()">New Game</button> -->
+          <button class="enemyButton inactive" disabled onclick="newEnemy()">New Enemy</button>
+          <button class="attackButton inactive" disabled onclick="attack()">Attack!</button>
+        </div>
+          
+      </div> <!-- END OF MIDDLE THIRD -->
+
+
+<!------------------------------------------------------------------------------------------------------>
+
+      <div class="rightThird">
 
         <div class="alienField">
           <div class="alien"><img class="alien" id="alien1"></div>
@@ -72,7 +88,7 @@
           <div class="stats" id="stats6"></div>
         </div>
 
-    </div> <!-- END OF RIGHT -->
+    </div> <!-- END OF RIGHT THIRD-->
   </div> <!-- END OF MAIN CONTAINER -->
 
 
