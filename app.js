@@ -51,7 +51,7 @@ class Game {
     });
 
     // SET UP SPACESHIP
-    this.assembly = new Spaceship(2, 5, 7);
+    this.assembly = new Spaceship(20, 5, .7);
   }
 
 
@@ -171,25 +171,24 @@ const attack = () => {
   if(currentAction === "HIT") {
     textOutput.innerHTML += " ...SUCCESS";
 
-    // IF ALIEN IS DEAD
+    // IF ENEMY IS DEAD
     if(!myGame.currentEnemy.isAlive()) {
-      //alienPicBig.setAttribute("hidden", true);
       currentlyFighting.setAttribute("style", "display:none")
 
-      // END OF GAME (WIN)
-      if(myGame.alienFleet.length === 0) {
+      if(myGame.alienFleet.length === 0) {      // END OF GAME (WIN)
         gameButton.setAttribute("class", "active");
         gameButton.removeAttribute("disabled");
         textOutput.innerHTML += "<br><br>********** Y O U   W O N **********";
         winDeclaration.setAttribute("style", "display:block");
         return;
-      } else {
+      } else {  // THIS ENEMY DEAD, BUT MORE IN WAITING
         enemyButton.setAttribute("class", "active");
         enemyButton.removeAttribute("disabled");
         displayActionLeft.innerHTML = "";
       }
     } 
-  } else { textOutput.innerHTML += " ...failure"; }
+
+  } else if(currentAction === 'MISS') { textOutput.innerHTML += " ...failure"; }
  
   if(myGame.currentEnemy.isAlive()) {
     counterAttack();

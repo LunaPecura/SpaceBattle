@@ -25,6 +25,7 @@ img.spaceship {
 .mainContainer {
   display: flex;
   border: solid greenyellow;
+  background-color: black;
   width: 750px;
   height: 575px;
 } 
@@ -34,7 +35,6 @@ img.spaceship {
   justify-content: space-evenly;
   border: solid purple;
   height: 106px;
-  background-color: black;
 }
 
 .displayWindow {
@@ -72,7 +72,6 @@ img.spaceship {
 }
 
 .textOutput {
-  /* overflow-y: scroll; */
   border: solid orange;
   height: 150px;
   font-size: 11px;
@@ -83,7 +82,7 @@ img.spaceship {
   font-family: "Courier New";
 }
 
-/* .displayArea.left */
+/* .displayArea.left under commons */
 
 .buttonArea {
   border: solid pink;
@@ -107,20 +106,6 @@ button.inactive {
   background-color: lightgray;
   color: gray;
   font-weight: 700;
-}
-
-.gameButtonActive {
-  background-color: greenyellow;
-}
-
-.enemyButton {
-  background-color: lightgray;
-  color: gray;
-}
-
-.attackButton {
-  background-color: lightgray;
-  color: gray;
 }
 
 
@@ -154,7 +139,7 @@ button.inactive {
   display: none;
 } 
 
-/* .displayArea.right */
+/* .displayArea.right under commons*/
 
 
 
@@ -180,19 +165,5 @@ div.alien {
   border: solid greenyellow;
   height: 75px;
   width: 75px;
-}
-
-.statsField {
-  border: solid turquoise;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-}
-
-.stats {
-  border: solid darkblue;
-  margin: 5px;
-  width: 75px;
-  height: 75px;
 }
 
