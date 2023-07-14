@@ -7,13 +7,13 @@ function randomInt(min, max) { // taken from MDN website; both min and max are i
 
 /* SPACESHIP CLASS *********************************************************/
 
-class Spaceship {
-  hull;
+class Spaceship { // Player
+  health; // health
   firepower;
   accuracy;
 
-  constructor(hull, firepower, accuracy) {
-    this.hull = hull;
+  constructor(health, firepower, accuracy) {
+    this.health = health;
     this.firepower = firepower;
     this.accuracy = accuracy;
   }
@@ -21,21 +21,25 @@ class Spaceship {
   attack(otherShip) {
     let successKey = Math.random();
     if (successKey <= this.accuracy) {
-      otherShip.hull -= this.firepower;
+      otherShip.health -= this.firepower;
       return "HIT";
     } else { return "MISS"; }
   }
 
   isAlive() {
-    return (this.hull > 0);
+    return (this.health > 0);
   }
+}
+
+class Alien { // Enemy
+
 }
 
 /* GAME CLASS **********************************************************************/
 
 class Game {
-  assembly;
-  alienFleet = [];
+  player; // player
+  alienFleet = []; // enemy
   fleetStrength = 6;
   roundCount = 0;
   currentEnemy;
@@ -51,18 +55,18 @@ class Game {
     });
 
     // SET UP SPACESHIP
-    this.assembly = new Spaceship(20, 5, .7);
+    this.player = new Spaceship(20, 5, .7);
   }
 
 
   attack() {
-    let currentAction = this.assembly.attack(this.currentEnemy);
+    let currentAction = this.player.attack(this.currentEnemy);
     displayActionRight.innerHTML = currentAction;
     return currentAction;
   }
 
   counterAttack() {
-    let currentAction = this.currentEnemy.attack(this.assembly);
+    let currentAction = this.currentEnemy.attack(this.player);
     displayActionLeft.innerHTML = currentAction;
     return currentAction;
   }
@@ -72,19 +76,16 @@ class Game {
 
 /* GAME PLAY ****************************************************************************************/
 
-// QUERY SELECTORS
-const displayHealthLeft = document.querySelector(".displayWindow.health.left");
-const displayHealthRight = document.querySelector(".displayWindow.health.right");
-const displayActionLeft = document.querySelector(".displayWindow.action.left");
-const displayActionRight = document.querySelector(".displayWindow.action.right");
-const textOutput = document.querySelector(".textOutput");
+// DISPLAYS
+const displayHealthLeft = document.querySelector(".display.health.left"); // healthDisplay1
+const displayHealthRight = document.querySelector(".display.health.right"); // healthDisplay2
+const displayActionLeft = document.querySelector(".display.action.left"); // actionDisplay1
+const displayActionRight = document.querySelector(".display.action.right"); // actionDisplay2
+
+// BUTTONS
 const gameButton = document.querySelector(".gameButton");
 const enemyButton = document.querySelector(".enemyButton");
 const attackButton = document.querySelector(".attackButton");
-const currentlyFighting = document.querySelector(".currentlyFighting");
-const winDeclaration = document.querySelector(".winDeclaration");
-const lossDeclaration = document.querySelector(".lossDeclaration");
-const spaceStation = document.querySelector("div.spaceStation")
 
 // VARIABLES
 let myGame;
@@ -104,8 +105,7 @@ const newGame = () => {
   }
   
   // RESET DISPLAYS
-  textOutput.innerHTML = "********** NEW GAME **********";
-  displayHealthLeft.innerHTML = myGame.assembly.hull;
+  displayHealthLeft.innerHTML = myGame.player.health;
   displayActionLeft.innerHTML = "";
   displayHealthRight.innerHTML = "";
   displayActionRight.innerHTML = "";
@@ -118,11 +118,6 @@ const newGame = () => {
   attackButton.setAttribute("class", "inactive"); 
   attackButton.setAttribute("disabled", true);
 
-  // RESET MAIN SCREEN
-  winDeclaration.setAttribute("style", "display:none")
-  lossDeclaration.setAttribute("style", "display:none")
-  spaceStation.setAttribute("style", "display:block")
-  currentlyFighting.setAttribute("style", "display:none");
 }
 
 
@@ -140,13 +135,10 @@ const newEnemy = () => {
   attackButton.removeAttribute("disabled");
 
   // ADJUST BIG & LITTLE ALIEN IMAGES
-  currentlyFighting.setAttribute("style", "display:block");
   document.querySelector("img.alien#alien" + alienCounter).setAttribute("hidden", true);
 
   // ADJUST DISPLAYS
-  textOutput.innerHTML = "NEW ENEMY -- H: " + myGame.currentEnemy.hull + " / FP: " +
-          myGame.currentEnemy.firepower + " / A: " + myGame.currentEnemy.accuracy;
-  displayHealthRight.innerHTML = myGame.currentEnemy.hull;
+  displayHealthRight.innerHTML = myGame.currentEnemy.health;
   displayActionRight.innerHTML = "";
 }
 
@@ -162,24 +154,17 @@ const attack = () => {
   attackButton.setAttribute("class", "inactive");
   attackButton.setAttribute("disabled", true);
   
-  // TEXT OUTPUT
-  textOutput.innerHTML += "<br>ROUND " + myGame.roundCount;
-  textOutput.innerHTML += "<br>ATTACK!";
-  displayHealthRight.innerHTML = myGame.currentEnemy.hull;
-  
+  // UPDATE DISPLAY
+  displayHealthRight.innerHTML = myGame.currentEnemy.health;
 
   if(currentAction === "HIT") {
-    textOutput.innerHTML += " ...SUCCESS";
 
     // IF ENEMY IS DEAD
     if(!myGame.currentEnemy.isAlive()) {
-      currentlyFighting.setAttribute("style", "display:none")
 
       if(myGame.alienFleet.length === 0) {      // END OF GAME (WIN)
         gameButton.setAttribute("class", "active");
         gameButton.removeAttribute("disabled");
-        textOutput.innerHTML += "<br><br>********** Y O U   W O N **********";
-        winDeclaration.setAttribute("style", "display:block");
         return;
       } else {  // THIS ENEMY DEAD, BUT MORE IN WAITING
         enemyButton.setAttribute("class", "active");
@@ -188,7 +173,7 @@ const attack = () => {
       }
     } 
 
-  } else if(currentAction === 'MISS') { textOutput.innerHTML += " ...failure"; }
+  } 
  
   if(myGame.currentEnemy.isAlive()) {
     counterAttack();
@@ -201,18 +186,10 @@ const attack = () => {
 
 const counterAttack = () => {
   let counterAction = myGame.counterAttack(); 
-  textOutput.innerHTML += "<br>INCOMING ATTACK!";
-  if(counterAction === "HIT") {
-    textOutput.innerHTML += " ... defense failed";
-  } else { textOutput.innerHTML += " ... DEFENSE SUCCESSFUL!"; }
-  displayHealthLeft.innerHTML = myGame.assembly.hull;
+  displayHealthLeft.innerHTML = myGame.player.health;
 
   // END OF GAME (LOSS)
-  if(!myGame.assembly.isAlive()) {
-    textOutput.innerHTML += "<br><br>++++++++++ Y O U   D I E D ++++++++++";
-    spaceStation.setAttribute("style", "display:none");
-    lossDeclaration.setAttribute("style", "display:block");
-    currentlyFighting.setAttribute("style", "display:none");
+  if(!myGame.player.isAlive()) {
     gameButton.setAttribute("class", "active");
     gameButton.removeAttribute("disabled");
     return;
@@ -222,8 +199,6 @@ const counterAttack = () => {
   }
 }
 
-
-//gameButton.style.backgroundColor = 'lightgray';
 
 
 /* SPECS

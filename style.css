@@ -3,12 +3,14 @@
 img.alien {
   width: 75px;
   height: 75px;
+  border-radius: 50%;
   content: url("https://png.pngtree.com/png-vector/20210301/ourmid/pngtree-cute-alien-flying-with-spaceship-ufo-mascot-logo-png-image_2993557.jpg");
 }
 
 img.bigAlien {
   width: 200px;
   height: 200px;
+  border-radius: 50%;
   content: url("https://png.pngtree.com/png-vector/20210301/ourmid/pngtree-cute-alien-flying-with-spaceship-ufo-mascot-logo-png-image_2993557.jpg");
 }
 
@@ -60,7 +62,7 @@ img.spaceship {
 .spaceStationArea {
   border: solid red;
   background-color: black;
-  height: 200px;
+  height: 366px;
 }
 
 .div.spaceStation {
@@ -71,7 +73,7 @@ img.spaceship {
   display: none;
 }
 
-.textOutput {
+/* .textOutput {
   border: solid orange;
   height: 150px;
   font-size: 11px;
@@ -80,7 +82,7 @@ img.spaceship {
   color: white;
   padding: 5px;
   font-family: "Courier New";
-}
+} */
 
 /* .displayArea.left under commons */
 
@@ -165,5 +167,6 @@ div.alien {
   border: solid greenyellow;
   height: 75px;
   width: 75px;
+  border-radius: 50%;
 }
 

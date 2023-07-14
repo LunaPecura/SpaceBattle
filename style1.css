@@ -1,0 +1,121 @@
+/* IMAGES **********************************************************************/
+
+img.alien {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    content: url("https://png.pngtree.com/png-vector/20210301/ourmid/pngtree-cute-alien-flying-with-spaceship-ufo-mascot-logo-png-image_2993557.jpg");
+}
+  
+  img.bigAlien {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    content: url("https://png.pngtree.com/png-vector/20210301/ourmid/pngtree-cute-alien-flying-with-spaceship-ufo-mascot-logo-png-image_2993557.jpg");
+  }
+  
+/*   img.spaceship {
+    width: 200px;
+    height: 200px;
+    content: url("https://png.pngtree.com/png-vector/20190130/ourmid/pngtree-astronauts-with-spaceships-exploring-space-can-use-commercial-elements-spacespaceshipastronautspacecraftweightless-statehand-png-image_587735.jpg");
+  } */
+  
+.mainContainer {
+  border: solid orangered;
+  width: 800px;
+  height: 600px;
+}
+
+.topPanel {
+  border: solid blue;
+  border-bottom-color: darkblue;
+  width: 794px;
+  height: 96px;
+  background-color: darkblue;
+}
+
+.mainPanel {
+  border: solid blue;
+  border-bottom-color: green;
+  width: 794px;
+  height: 390px;
+  background-image: url("./background.jpg");
+  background-size: 100% 100%;
+}
+
+.bottomPanel {
+  border: solid seagreen;
+  display: flex;
+  width: 794px;
+  height: 96px;
+  background-color: black;
+}
+
+.display {
+  background-color:blanchedalmond;
+  border: solid darkred;
+  width: 75px;
+  height: 75px;
+  font-size: 25px;
+  text-align: center;
+  line-height: 75px;
+  font-weight: 900;
+  margin-top: 8px;
+}
+
+.display.left {
+  margin-left: 8px;
+}
+
+.display.right {
+  margin-right: 8px;
+}
+
+.alienField {
+  border: solid darkblue;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding: 5px;
+  border-radius: 25%;
+  background-color: yellow;
+} 
+
+div.alien {
+  border: solid black;
+  background-color: black;
+  height: 75px;
+  width: 75px;
+  border-radius: 50%;
+}
+
+.buttonArea {
+  border: solid darkred;
+  display: flex;
+  flex-direction: row;
+  width: fit-content;
+  margin: auto;
+  margin-top: 23px;
+}
+  
+button {
+  height: 30px;
+  font-weight: 900;
+  margin: 5px;
+}
+  
+button.active {
+  background-color: greenyellow;
+  color: black;
+  font-weight: 900;
+}
+  
+button.inactive {
+  background-color: lightgray;
+  color: gray;
+  font-weight: 700;
+}
+
+
+
+  

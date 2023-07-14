@@ -7,7 +7,7 @@
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style1.css">
   </head>
   
   <body>
@@ -16,63 +16,8 @@
     <!-- MAIN -->
     <div class="mainContainer">
 
-      <!-- LEFT THIRD -->
-      <div class="leftThird">
-
-        <!--Area A1: space station-->
-        <div class="spaceStationArea">
-          <div class="spaceStation"><img class="spaceship"></div>
-          <div class="lossDeclaration"><img class="bigAlien"></div>
-        </div>
-
-        <!--Area A2: text output-->
-        <div class="textOutput"></div>
-
-        <!--Area A3: display-->
-        <div class="displayArea left">
-          <div class="displayWindow health left"></div>
-          <div class="displayWindow action left"></div>
-        </div>
-
-        <!--Area A4: button(s)-->
-        <div class="buttonArea left">
-          <button class="gameButton active" onclick="newGame()">New Game</button>
-        </div>
-        
-      </div> <!-- END OF LEFT THIRD -->
-
-
-<!------------------------------------------------------------------------------------------------------>
-
-
-      <!-- MIDDLE THIRD -->
-      <div class="middleThird">
-
-        <!--Area B1: battlefield-->
-        <div class="battleArea">
-          <div class="currentlyFighting"><img class="bigAlien"></div>
-          <div class="winDeclaration"><img class="spaceship"></div>
-        </div>
-
-        <!--Area B2: display-->
-        <div class="displayArea right">
-          <div class="displayWindow health right"></div>
-          <div class="displayWindow action right"></div>
-        </div>
-
-        <!--Area B3: buttons-->
-        <div class="buttonArea right">
-          <button class="enemyButton inactive" disabled onclick="newEnemy()">New Enemy</button>
-          <button class="attackButton inactive" disabled onclick="attack()">Attack!</button>
-        </div>
-          
-      </div> <!-- END OF MIDDLE THIRD -->
-
-
-<!------------------------------------------------------------------------------------------------------>
-
-      <div class="rightThird">
-
+      <!-- TOP THIRD -->
+      <div class="topPanel">
         <div class="alienField">
           <div class="alien"><img class="alien" id="alien1"></div>
           <div class="alien"><img class="alien" id="alien2"></div>
@@ -81,8 +26,31 @@
           <div class="alien"><img class="alien" id="alien5"></div>
           <div class="alien"><img class="alien" id="alien6"></div>
         </div>
+      </div> 
 
-    </div> <!-- END OF RIGHT THIRD-->
+
+<!------------------------------------------------------------------------------------------------------>
+
+
+      <div class="mainPanel">
+        
+      </div> 
+
+
+<!------------------------------------------------------------------------------------------------------>
+
+      <div class="bottomPanel">
+        <div class="display health left"></div>
+        <div class="display action left"></div>
+        <div class="buttonArea">
+          <button class="gameButton active" onclick="newGame()">New Game</button>
+          <button class="enemyButton inactive" disabled onclick="newEnemy()">New Enemy</button>
+          <button class="attackButton inactive" disabled onclick="attack()">Attack!</button>
+        </div>
+        <div class="display health right"></div>
+        <div class="display action right"></div>
+      </div>
+
   </div> <!-- END OF MAIN CONTAINER -->
 
 
