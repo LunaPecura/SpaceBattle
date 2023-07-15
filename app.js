@@ -1,232 +1,209 @@
 
 function randomInt(min, max) { // taken from MDN website; both min and max are inclusive
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1) + min); 
+	min = Math.ceil(min);
+	max = Math.floor(max);
+	return Math.floor(Math.random() * (max - min + 1) + min); 
 }
 
-/* SPACESHIP CLASS *********************************************************/
 
-class Spaceship { // Player
-  health; // health
-  firepower;
-  accuracy;
 
-  constructor(health, firepower, accuracy) {
-    this.health = health;
-    this.firepower = firepower;
-    this.accuracy = accuracy;
-  }
+class Player { // Player
+	health; 
+	firepower;
+	accuracy;
 
-  attack(otherShip) {
-    let successKey = Math.random();
-    if (successKey <= this.accuracy) {
-      otherShip.health -= this.firepower;
-      return "HIT";
-    } else { return "MISS"; }
-  }
+	constructor(health, firepower, accuracy) {
+		this.health = health;
+		this.firepower = firepower;
+		this.accuracy = accuracy;
+	}
 
-  isAlive() {
-    return (this.health > 0);
-  }
-}
+	attack(otherPlayer) {
+		let successKey = Math.random();
+		if (successKey <= this.accuracy) {
+			otherPlayer.health -= this.firepower;
+			return "HIT";
+		} else { return "MISS"; }
+	}
 
-class Alien { // Enemy
+	isAlive() { return (this.health > 0); }
 
-}
+} // end of Player class
 
-/* GAME CLASS **********************************************************************/
+
 
 class Game {
-  player; // player
-  alienFleet = []; // enemy
-  fleetStrength = 6;
-  roundCount = 0;
-  currentEnemy;
-  
-  constructor() {
+	player; 
+	alienFleet = []; 
+	fleetStrength = 6;
+	roundCount = 0;
+	currentEnemy;
 
-    // SET UP ALIEN ARRAY
-    this.alienFleet = Array.from(Array(this.fleetStrength), () => {
-      let h = randomInt(3, 6);
-      let fp = randomInt(2, 4);
-      let ac = randomInt(6, 8)/10.0;
-      return new Spaceship(h, fp, ac);
-    });
+	constructor() {
+		this.player = new Player(20, 5, .7);
+		this.alienFleet = Array.from(Array(this.fleetStrength), () => {
+			let h = randomInt(3, 6);
+			let fp = randomInt(2, 4);
+			let ac = randomInt(6, 8)/10.0;
+			return new Player(h, fp, ac);
+		});
+	}	
 
-    // SET UP SPACESHIP
-    this.player = new Spaceship(20, 5, .7);
-  }
+	attack() { return this.player.attack(this.currentEnemy); }
+	counterAttack() { return this.currentEnemy.attack(this.player); }
 
-
-  attack() {
-    let currentAction = this.player.attack(this.currentEnemy);
-    displayActionRight.innerHTML = currentAction;
-    return currentAction;
-  }
-
-  counterAttack() {
-    let currentAction = this.currentEnemy.attack(this.player);
-    displayActionLeft.innerHTML = currentAction;
-    return currentAction;
-  }
-}
+} // end of Game class
 
 
 
 /* GAME PLAY ****************************************************************************************/
 
 // DISPLAYS
-const displayHealthLeft = document.querySelector(".display.health.left"); // healthDisplay1
-const displayHealthRight = document.querySelector(".display.health.right"); // healthDisplay2
-const displayActionLeft = document.querySelector(".display.action.left"); // actionDisplay1
-const displayActionRight = document.querySelector(".display.action.right"); // actionDisplay2
+const playerHealthDisplay = document.querySelector(".display.health.left"); 
+const enemyHealthDisplay = document.querySelector(".display.health.right"); 
+const playerActionDisplay = document.querySelector(".display.action.left"); 
+const enemyActionDisplay = document.querySelector(".display.action.right"); 
 
 // BUTTONS
 const gameButton = document.querySelector(".gameButton");
 const enemyButton = document.querySelector(".enemyButton");
 const attackButton = document.querySelector(".attackButton");
 
+// IMAGES
+const alienImgs = [1,2,3,4,5,6].map(i => document.querySelector("#alienImg" + i));
+const bigAlienImg = document.querySelector(".bigAlienImg");
+
+// CONTENT
+const alienDivs = [1,2,3,4,5,6].map(i => document.querySelector("#alienDiv" + i));
+const bigAlienDiv = document.querySelector(".currentEnemy");
+const messageTargetDiv = document.querySelector(".message.target");
+const messageWinDiv = document.querySelector(".message.win");
+const messageLossDiv = document.querySelector(".message.loss");
+
+
 // VARIABLES
 let myGame;
 let alienCounter;
+let currentTarget; // int in {1,...,6}
 
 
-
-/* NEW GAME *****************************************************************************************/
 
 const newGame = () => {
-  myGame = new Game();
-  alienCounter = 0;
+	myGame = new Game();
+	alienCounter = 0;
+	currentTarget = 0;
 
-  // RESET LITTLE ALIEN IMAGES
-  for(let i=1; i<=myGame.fleetStrength; i++) {
-    document.querySelector("img.alien#alien" + parseInt(i)).removeAttribute("hidden");
-  }
-  
-  // RESET DISPLAYS
-  displayHealthLeft.innerHTML = myGame.player.health;
-  displayActionLeft.innerHTML = "";
-  displayHealthRight.innerHTML = "";
-  displayActionRight.innerHTML = "";
-  
-  // RESET BUTTONS
-  gameButton.setAttribute("class", "inactive");
-  gameButton.setAttribute("disabled", true);
-  enemyButton.setAttribute("class", "active");
-  enemyButton.removeAttribute("disabled");
-  attackButton.setAttribute("class", "inactive"); 
-  attackButton.setAttribute("disabled", true);
+	// RESET ALIEN IMAGES
+	bigAlienDiv.setAttribute("hidden", true);
+	alienImgs.map((element, index) => {
+		element.removeAttribute("hidden");
+		element.setAttribute("onclick", `setTarget(${index+1})`);
+	});
+	messageTargetDiv.removeAttribute("hidden");
+	
+	// RESET DISPLAYS
+	playerHealthDisplay.innerHTML = myGame.player.health;
+	playerActionDisplay.innerHTML = "";
+	enemyHealthDisplay.innerHTML = "";
+	enemyActionDisplay.innerHTML = "";
 
+	// RESET BUTTONS
+	gameButton.setAttribute("disabled", true);
+	enemyButton.setAttribute("disabled", true);
+	attackButton.setAttribute("disabled", true);
+
+	messageWinDiv.setAttribute("hidden", true);
+	messageLossDiv.setAttribute("hidden", true);
+
+} // end of newGame
+
+
+
+const setTarget = (i) => {
+	currentTarget = i;
+
+	alienDivs.forEach(div => div.classList.remove("target"));
+	alienDivs[i-1].classList.add("target");
+	enemyButton.removeAttribute("disabled");
+	enemyHealthDisplay.innerHTML = myGame.alienFleet[i-1].health;
+	messageTargetDiv.setAttribute("hidden", true);
 }
 
-
-
-/* NEW ENEMY ****************************************************************************************/
 
 const newEnemy = () => {
-  alienCounter++;
-  myGame.currentEnemy = myGame.alienFleet.pop();
+	
+	alienCounter++;
+	myGame.currentEnemy = myGame.alienFleet[currentTarget-1];
+	enemyHealthDisplay.innerHTML = myGame.currentEnemy.health;
+	enemyActionDisplay.innerHTML = "";
 
-  // ADJUST BUTTONS
-  enemyButton.setAttribute("class", "inactive");
-  enemyButton.setAttribute("disabled", true);
-  attackButton.setAttribute("class", "active");
-  attackButton.removeAttribute("disabled");
+	// ADJUST BUTTONS
+	enemyButton.setAttribute("disabled", true);
+	attackButton.removeAttribute("disabled");
 
-  // ADJUST BIG & LITTLE ALIEN IMAGES
-  document.querySelector("img.alien#alien" + alienCounter).setAttribute("hidden", true);
+	// ADJUST ALIEN IMAGES
+	alienImgs[currentTarget-1].setAttribute("hidden", true)
+	alienDivs[currentTarget-1].removeAttribute("onclick");
+	bigAlienDiv.removeAttribute("hidden");
+	alienDivs[currentTarget-1].classList.remove("target");
 
-  // ADJUST DISPLAYS
-  displayHealthRight.innerHTML = myGame.currentEnemy.health;
-  displayActionRight.innerHTML = "";
 }
 
 
-
-/* ATTACK *******************************************************************************************/
 
 const attack = () => {
-  myGame.roundCount++;
-  let currentAction = myGame.attack();
+	myGame.roundCount++;
+	let currentAction = myGame.attack();
 
-  // ADJUST BUTTONS
-  attackButton.setAttribute("class", "inactive");
-  attackButton.setAttribute("disabled", true);
-  
-  // UPDATE DISPLAY
-  displayHealthRight.innerHTML = myGame.currentEnemy.health;
+	// ADJUST BUTTONS
+	attackButton.setAttribute("disabled", true);
 
-  if(currentAction === "HIT") {
+	// UPDATE DISPLAY
+	enemyHealthDisplay.innerHTML = myGame.currentEnemy.health;
+	enemyActionDisplay.innerHTML = currentAction;
 
-    // IF ENEMY IS DEAD
-    if(!myGame.currentEnemy.isAlive()) {
+	if(currentAction === "HIT") {
 
-      if(myGame.alienFleet.length === 0) {      // END OF GAME (WIN)
-        gameButton.setAttribute("class", "active");
-        gameButton.removeAttribute("disabled");
-        return;
-      } else {  // THIS ENEMY DEAD, BUT MORE IN WAITING
-        enemyButton.setAttribute("class", "active");
-        enemyButton.removeAttribute("disabled");
-        displayActionLeft.innerHTML = "";
-      }
-    } 
+		// IF ENEMY IS DEAD
+		if(!myGame.currentEnemy.isAlive()) {
 
-  } 
- 
-  if(myGame.currentEnemy.isAlive()) {
-    counterAttack();
-  }
-}
+			if(alienCounter === myGame.fleetStrength) {      // END OF GAME (WIN)
+				gameButton.removeAttribute("disabled");
+				messageWinDiv.removeAttribute("hidden");
+				return;
+			} else {  // THIS ENEMY DEAD, BUT MORE IN WAITING
+				playerActionDisplay.innerHTML = "";
+				bigAlienDiv.setAttribute("hidden", true);
+				messageTargetDiv.removeAttribute("hidden");
+			}
+		} 
+	} 
 
+	if(myGame.currentEnemy.isAlive()) { 
+		setTimeout(() => {
+			counterAttack(); 
+		}, 1000);
+	}
 
+	return currentAction;
 
-/* COUNTER ATTACK ***********************************************************************************/
+} // end of attack()
+
 
 const counterAttack = () => {
-  let counterAction = myGame.counterAttack(); 
-  displayHealthLeft.innerHTML = myGame.player.health;
+	let counterAction = myGame.counterAttack(); 
+	playerHealthDisplay.innerHTML = myGame.player.health;
+	playerActionDisplay.innerHTML = counterAction;
 
-  // END OF GAME (LOSS)
-  if(!myGame.player.isAlive()) {
-    gameButton.setAttribute("class", "active");
-    gameButton.removeAttribute("disabled");
-    return;
-  } else {
-    attackButton.setAttribute("class", "active");
-    attackButton.removeAttribute("disabled");
-  }
-}
+	if(!myGame.player.isAlive()) {			// END OF GAME (LOSS)
+		gameButton.removeAttribute("disabled");
+		messageLossDiv.removeAttribute("hidden");
+		return;
+	} else {
+		attackButton.removeAttribute("disabled");
+	}
 
+	return counterAction;
 
+} // end of counterAttack()
 
-/* SPECS
-There are six alien ships. 
-The aliens' weakness is that they are too logical and attack one at a time: ...
-Your strength is that you have the initiative and get to attack first. 
-However, you do not have targeting lasers and can only attack the aliens in order. 
-After you have destroyed a ship, you have the option to make a hasty retreat.
-*/
-
-/* GAME ROUND
-You attack the first alien ship
-If the ship survives, it attacks you
-If you survive, you attack the ship again
-If it survives, it attacks you again ... etc
-If you destroy the ship, you have the option to attack the next ship or to retreat
-If you retreat, the game is over, perhaps leaving the game open for further developments or options
-You win the game if you destroy all of the aliens
-You lose the game if you are destroyed
-*/
-
-/* SHIP PROPERTIES
-X hull is the same as hitpoints. If hull reaches 0 or less, the ship is destroyed
-X firepower is the amount of damage done to the hull of the target with a successful hit
-X accuracy is the chance between 0 and 1 that the ship will hit its target
-*/
-
-/* SHIP SPECS
-USS ASSEMBLY: hull: 20; firepower: 5; accuracy: .7
-ALIENS: hull: range(3,6); firepower: range(2,4); accuracy: range(.6,.8)
-*/

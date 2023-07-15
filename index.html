@@ -19,12 +19,12 @@
       <!-- TOP THIRD -->
       <div class="topPanel">
         <div class="alienField">
-          <div class="alien"><img class="alien" id="alien1"></div>
-          <div class="alien"><img class="alien" id="alien2"></div>
-          <div class="alien"><img class="alien" id="alien3"></div>
-          <div class="alien"><img class="alien" id="alien4"></div>
-          <div class="alien"><img class="alien" id="alien5"></div>
-          <div class="alien"><img class="alien" id="alien6"></div>
+          <div class="alienDiv" id="alienDiv1"><img class="alienImg" id="alienImg1" /></div>
+          <div class="alienDiv" id="alienDiv2"><img class="alienImg" id="alienImg2" /></div>
+          <div class="alienDiv" id="alienDiv3"><img class="alienImg" id="alienImg3" /></div>
+          <div class="alienDiv" id="alienDiv4"><img class="alienImg" id="alienImg4" /></div>
+          <div class="alienDiv" id="alienDiv5"><img class="alienImg" id="alienImg5" /></div>
+          <div class="alienDiv" id="alienDiv6"><img class="alienImg" id="alienImg6" /></div>
         </div>
       </div> 
 
@@ -33,7 +33,10 @@
 
 
       <div class="mainPanel">
-        
+        <div class="message target" hidden>TARGET AN ALIEN</div>
+        <div class="message win" hidden>YOU WON</div>
+        <div class="message loss" hidden>YOU LOST</div>
+        <div class="currentEnemy" hidden><img class="bigAlienImg" /></div>
       </div> 
 
 
@@ -44,8 +47,8 @@
         <div class="display action left"></div>
         <div class="buttonArea">
           <button class="gameButton active" onclick="newGame()">New Game</button>
-          <button class="enemyButton inactive" disabled onclick="newEnemy()">New Enemy</button>
-          <button class="attackButton inactive" disabled onclick="attack()">Attack!</button>
+          <button class="enemyButton inactive" disabled onclick="newEnemy()">Target</button>
+          <button class="attackButton inactive" disabled onclick="attack()">Attack</button>
         </div>
         <div class="display health right"></div>
         <div class="display action right"></div>

@@ -1,25 +1,29 @@
 /* IMAGES **********************************************************************/
 
-img.alien {
-    width: 75px;
-    height: 75px;
-    border-radius: 50%;
-    content: url("https://png.pngtree.com/png-vector/20210301/ourmid/pngtree-cute-alien-flying-with-spaceship-ufo-mascot-logo-png-image_2993557.jpg");
+img.alienImg {
+	width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  content: url("https://png.pngtree.com/png-vector/20210301/ourmid/pngtree-cute-alien-flying-with-spaceship-ufo-mascot-logo-png-image_2993557.jpg");
 }
   
-  img.bigAlien {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    content: url("https://png.pngtree.com/png-vector/20210301/ourmid/pngtree-cute-alien-flying-with-spaceship-ufo-mascot-logo-png-image_2993557.jpg");
-  }
-  
-/*   img.spaceship {
-    width: 200px;
-    height: 200px;
-    content: url("https://png.pngtree.com/png-vector/20190130/ourmid/pngtree-astronauts-with-spaceships-exploring-space-can-use-commercial-elements-spacespaceshipastronautspacecraftweightless-statehand-png-image_587735.jpg");
-  } */
-  
+img.bigAlienImg {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  content: url("https://png.pngtree.com/png-vector/20210301/ourmid/pngtree-cute-alien-flying-with-spaceship-ufo-mascot-logo-png-image_2993557.jpg");
+}
+
+img.spaceship {
+  width: 200px;
+  height: 200px;
+  content: url("https://png.pngtree.com/png-vector/20190130/ourmid/pngtree-astronauts-with-spaceships-exploring-space-can-use-commercial-elements-spacespaceshipastronautspacecraftweightless-statehand-png-image_587735.jpg");
+} 
+
+
+/* CONTTAINERS **********************************************************************/
+
+
 .mainContainer {
   border: solid orangered;
   width: 800px;
@@ -51,6 +55,10 @@ img.alien {
   background-color: black;
 }
 
+
+/* DISPLAYS **********************************************************************/
+
+
 .display {
   background-color:blanchedalmond;
   border: solid darkred;
@@ -71,23 +79,9 @@ img.alien {
   margin-right: 8px;
 }
 
-.alienField {
-  border: solid darkblue;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  padding: 5px;
-  border-radius: 25%;
-  background-color: yellow;
-} 
 
-div.alien {
-  border: solid black;
-  background-color: black;
-  height: 75px;
-  width: 75px;
-  border-radius: 50%;
-}
+/* BUTTONS **********************************************************************/
+
 
 .buttonArea {
   border: solid darkred;
@@ -102,20 +96,65 @@ button {
   height: 30px;
   font-weight: 900;
   margin: 5px;
-}
-  
-button.active {
   background-color: greenyellow;
   color: black;
   font-weight: 900;
 }
-  
-button.inactive {
+
+button:disabled {
   background-color: lightgray;
   color: gray;
   font-weight: 700;
 }
 
 
+/* CONTENT **********************************************************************/
 
-  
+.message {
+  border: solid black;
+  background-color: black;
+  font-family: 'Lucida Sans';
+  font-size: 35px;
+  color: red;
+  padding: 5px;
+  text-align: center;
+  margin-top: 200px;
+  font-weight: 900;
+}
+
+
+
+.currentEnemy {
+  border: solid black;
+  height: 200px;
+  width: 200px;
+  border-radius: 50%;
+}
+
+.alienField {
+  border: solid darkblue;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding: 5px;
+  border-radius: 25%;
+  background-color: yellow;
+} 
+
+.alienDiv {
+  border: solid black;
+  background-color: black;
+  height: 75px;
+  width: 75px;
+  border-radius: 50%;
+}
+
+.alienDiv.target {
+	border: solid red;
+}
+
+.alienDiv:hover {
+	border: solid red;
+}
+
+
